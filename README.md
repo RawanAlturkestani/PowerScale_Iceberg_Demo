@@ -137,7 +137,7 @@ No quotes and no spaces around `=`. Also put the same IP in `conf/spark-defaults
 | 8080 | Trino | Trino web UI and client connections |
 | 9083 | Hive Metastore | Thrift catalog connection | 
 | 5432 | PostgreSQL | Metastore database | 
-| 9020 | PowerScale S3 (HTTP) |
+| 9020 | PowerScale | S3 (HTTP) | 
 
 ### Start The Environment 
 
