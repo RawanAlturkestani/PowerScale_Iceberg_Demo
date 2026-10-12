@@ -141,6 +141,59 @@ No quotes and no spaces around `=`. Also put the same IP in `conf/spark-defaults
 | 5432 | PostgreSQL | Metastore database | 
 | 9020 | PowerScale | S3 Buckets (HTTP) | 
 
+## Download the required jars
+
+The demo needs three Java libraries (jars). 
+**not included in this repository**:
+
+| Jar | Size | Used by | Why it is needed |
+|---|---|---|---|
+| `hadoop-aws-3.3.6.jar` | ~769 KB | Hive Metastore | S3A connector, used to create database folders on PowerScale |
+| `aws-java-sdk-bundle-1.12.367.jar` | ~297 MB | Hive Metastore | AWS SDK that the S3A connector depends on |
+| `postgresql-42.7.3.jar` | ~1.1 MB | Hive Metastore, Spark | Lets the metastore store its catalog in PostgreSQL |
+
+### 1. Download them
+
+The `aws-java-sdk-bundle-1.12.367.jar` jar file is added as placeholder and too large to include so in order to download it, from the project folder, run:
+
+```
+sh jars/get-jars.sh
+```
+
+The script downloads the jars from Maven Central into the `jars/` folder,
+replacing any placeholder files. The Docker host needs internet access for this step.
+
+### 2. Check them
+
+```
+ls -lh jars/
+```
+
+Each jar should be a normal file (the line starts with `-`) with roughly the size shown
+in the table above. If a jar shows only a few hundred bytes, or the line starts with `d`,
+it is not the real file. Run the script again.
+
+
+### 3. Troubleshooting
+
+**Check what the metastore container actually sees:**
+
+```
+docker logs metastore --tail 30
+docker exec metastore ls -l /opt/hive/lib/ | grep -E "hadoop-aws|aws-java-sdk|postgres"
+```
+
+All three files should show their full sizes.
+
+**Manual download** (if the script cannot run):
+
+```
+cd jars
+curl -fLO https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-aws/3.3.6/hadoop-aws-3.3.6.jar
+curl -fLO https://repo1.maven.org/maven2/com/amazonaws/aws-java-sdk-bundle/1.12.367/aws-java-sdk-bundle-1.12.367.jar
+curl -fLO https://repo1.maven.org/maven2/org/postgresql/postgresql/42.7.3/postgresql-42.7.3.jar
+cd ..
+```
 ### Start The Environment 
 
 Download the files attached to this GitHub and go to your command prompt make sure you are in the file downloaded 'hive-iceberg-demo' and run below command. 
