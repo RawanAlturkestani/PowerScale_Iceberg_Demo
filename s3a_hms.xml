@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!-- S3A settings for the Hive Metastore, pointing at PowerScale S3.
+     ${env.X} values come from the metastore container's environment
+     (set in docker-compose.yml from .env). Credentials are picked up
+     automatically from AWS_ACCESS_KEY_ID / AWS_SECRET_ACCESS_KEY. -->
+<configuration>
+  <property>
+    <name>fs.s3a.endpoint</name>
+    <value>${env.S3_ENDPOINT}</value>
+  </property>
+  <property>
+    <name>fs.s3a.path.style.access</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>fs.s3a.connection.ssl.enabled</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>fs.s3a.endpoint.region</name>
+    <value>us-east-1</value>
+  </property>
+  <property>
+    <name>fs.s3a.impl</name>
+    <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+  </property>
+  <!-- Also handle s3:// paths with the S3A connector -->
+  <property>
+    <name>fs.s3.impl</name>
+    <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+  </property>
+</configuration>
