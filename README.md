@@ -1,6 +1,7 @@
 # High Level Architecture of the Demo Instances 
 
-![alt text](image.png)
+<img width="1674" height="1059" alt="image" src="https://github.com/user-attachments/assets/0cfb6dd0-12f9-407c-a328-fe3ba7409c22" />
+
 
 
 ## Demo objective
@@ -112,11 +113,12 @@ An XML reply means S3 is reachable over HTTP.
 
 In the demo folder, open `.env` and fill in the PowerScale IP and the key from step 4:
 
-    POWERSCALE_HOST=<PowerScale IP>
+    POWERSCALE_HOST=<ADD_YOUR_POWERSCALE_IP>
     POWERSCALE_PORT=9020
     POWERSCALE_BUCKET=warehouse
-    POWERSCALE_ACCESS_KEY=1_root_accid
-    POWERSCALE_SECRET_KEY=<your secret key>
+    POWERSCALE_ACCESS_KEY=<ADD_YOUR_ACCESS_KEY>
+    POWERSCALE_SECRET_KEY=<ADD_YOUR_SECRET_KEY>
+
 
 No quotes and no spaces around `=`. Also put the same IP in `conf/spark-defaults.conf`
 (the `s3.endpoint` and `fs.s3a.endpoint` lines), since that file cannot read `.env`.
@@ -137,7 +139,7 @@ No quotes and no spaces around `=`. Also put the same IP in `conf/spark-defaults
 | 8080 | Trino | Trino web UI and client connections |
 | 9083 | Hive Metastore | Thrift catalog connection | 
 | 5432 | PostgreSQL | Metastore database | 
-| 9020 | PowerScale | S3 (HTTP) | 
+| 9020 | PowerScale | S3 Buckets (HTTP) | 
 
 ### Start The Environment 
 
@@ -147,6 +149,6 @@ Download the files attached to this GitHub and go to your command prompt make su
  docker compose up -d 
 
 ```
-Open Jupyter at `http://<Docker host IP>:8888 , select "notebooks/General_Walkthrough.ipynb" notebook and run the examples inside by order to explore the environment. 
+Open Jupyter at `http://<Docker host IP>:8888` , select "notebooks/General_Walkthrough.ipynb" notebook and run the examples inside by order to explore the environment. 
 
 
