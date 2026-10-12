@@ -147,6 +147,6 @@ Download the files attached to this GitHub and go to your command prompt make su
  docker compose up -d 
 
 ```
-Open Jupyter at `http://<Docker host IP>:8888 and run the examples by order. 
+Open Jupyter at `http://<Docker host IP>:8888 , select "notebooks/General_Walkthrough.ipynb" notebook and run the examples inside by order to explore the environment. 
 
 
