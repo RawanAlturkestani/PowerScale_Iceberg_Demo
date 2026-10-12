@@ -56,7 +56,7 @@ services:
         -Djavax.jdo.option.ConnectionPassword=password
     ports: ["9083:9083"]                 # Thrift endpoint
     volumes:
-      - ./postgresql-42.7.3.jar:/opt/hive/lib/postgres.jar:ro
+      - ./jars/postgresql-42.7.3.jar:/opt/hive/lib/postgres.jar:ro
       # S3A connector so the metastore can create database folders on PowerScale
       - ./jars/hadoop-aws-3.3.6.jar:/opt/hive/lib/hadoop-aws-3.3.6.jar:ro
       - ./jars/aws-java-sdk-bundle-1.12.367.jar:/opt/hive/lib/aws-java-sdk-bundle-1.12.367.jar:ro
