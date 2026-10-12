@@ -131,7 +131,7 @@ No quotes and no spaces around `=`. Also put the same IP in `conf/spark-defaults
 ### Make sure ports used by the environment are free
 
 | Port | Service | Used for | 
-|---|---|---|---|
+|---|---|---|
 | 8888 | Spark container | Jupyter notebook | 
 | 4040 | Spark container | Spark UI (jobs and queries) | 
 | 8080 | Trino | Trino web UI and client connections |
