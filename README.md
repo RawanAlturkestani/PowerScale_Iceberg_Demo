@@ -25,10 +25,10 @@ A small, self-contained environment for testing an open source lakehouse stack o
 Show open source lakehouse tools working with Dell PowerScale as their storage, using its S3 interface.
 
 By the end of the demo you will see:
-* Spark and Trino reading and writing the **same Iceberg table** on PowerScale, with no copies
-* How Iceberg organises a table into **three layers**: catalog, metadata and data
+* Spark and Trino reading and writing the same Iceberg table on PowerScale, with no copies
+* How Iceberg organises a table into three layers: catalog, metadata and data
 * Where each layer lives: the catalog in the Hive Metastore (backed by PostgreSQL), the metadata and data files on PowerScale
-* Iceberg features driven by its metadata, such as **snapshots and time travel**
+* Iceberg features driven by its metadata, such as snapshots and time travel
 
 **Who it's for:** Dell customers and partners who want to see open source data engines working with PowerScale.
 
