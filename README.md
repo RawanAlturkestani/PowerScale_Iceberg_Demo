@@ -101,13 +101,15 @@ Use a dedicated user rather than root:
 
 **4. Create the bucket and its folder**
 
-    mkdir -p /ifs/data/lakehouse/warehouse
-    chown lakehouse /ifs/data/lakehouse/warehouse
-    isi s3 buckets create warehouse /ifs/data/lakehouse/warehouse --owner lakehouse
+mkdir -p /ifs/data/lakehouse/warehouse
+chmod 755 /ifs/data/lakehouse
+chown lakehouse /ifs/data/lakehouse/warehouse
+isi s3 buckets create warehouse /ifs/data/lakehouse/warehouse --owner lakehouse
 
-* `warehouse` is the **bucket name**: what Spark and Trino use, for example `s3a://warehouse/...`
-* `/ifs/data/lakehouse/warehouse` is the **path**: the folder on PowerScale where the files are stored. It must exist, or every write fails with "The specified key does not exist" (404).
-* `--owner lakehouse` lets the demo user's key read and write the bucket
+* warehouse is the bucket name: what Spark and Trino use, for example s3a://warehouse/...
+* /ifs/data/lakehouse/warehouse is the path: the folder on PowerScale where the files are stored. It must exist, or every write fails with "The specified key does not exist" (404).
+* --owner lakehouse lets the demo user's key read and write the bucket
+* chmod 755 /ifs/data/lakehouse lets the demo user pass through the parent folder. On many clusters mkdir creates folders that only root can open, and without this every request fails with "Access Denied" (403).
 
 > In the web UI: **Protocols > Object storage (S3) > Buckets**. Enter the folder in the **Path** field and tick **Create path**. The **Description** field is only a label.
 
