@@ -130,10 +130,6 @@ Copy both values straight away. The secret is shown only once:
 
 Type `exit` to leave the cluster, then from the Docker host:
 
-    curl http://<PowerScale IP>:9020
-
-An XML reply means S3 is reachable over HTTP.
-
 ### Install and setup docker environment
 
 **1. Check the Docker host**
