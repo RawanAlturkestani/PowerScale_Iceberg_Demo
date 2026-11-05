@@ -128,15 +128,42 @@ Copy both values straight away. The secret is shown only once:
     isi s3 buckets list
     ls -ld /ifs/data/lakehouse/warehouse
 
-Type `exit` to leave the cluster, then from the Docker host:
+The bucket list should show `warehouse` with the path `/ifs/data/lakehouse/warehouse`, and `ls` should show the folder, owned by `lakehouse`.
+
+Type `exit` to leave the cluster.
 
 ### Install and setup docker environment
 
 **1. Check the Docker host**
 
-* Docker Engine and the Docker Compose plugin (`docker compose version` should work)
-* **Internet access** to pull images from Docker Hub and download jars from Maven Central (`repo1.maven.org`)
-* **Network access to PowerScale** on port 9020: `curl http://<PowerScale IP>:9020` should return XML
+Run these steps in a terminal on the host that will run the containers. This can be a server or a virtual machine.
+
+**Install Docker Engine**
+
+Install Docker Engine and the Docker Compose plugin on the Docker host. The steps depend on your Linux version, so follow Docker's guide for your operating system (for example Ubuntu, RHEL or Debian):
+
+[Install Docker Engine](https://docs.docker.com/engine/install/)
+
+To check that it's installed, run:
+
+    docker --version
+    docker compose version
+
+**Check internet access**
+
+The host needs internet access to pull images from Docker Hub and download jars from Maven Central:
+
+    curl -sI https://repo1.maven.org/maven2/ | head -1
+
+A line starting with `HTTP` means it's reachable.
+
+**Check that PowerScale is reachable**
+
+The host needs to reach PowerScale's S3 service on port 9020:
+
+    curl http://<PowerScale IP>:9020
+
+An XML reply means S3 is reachable over HTTP. If it says `Connection refused`, check that S3 is enabled and HTTP is allowed (steps 1 and 2 of the bucket setup).
 
 > **Behind a proxy?** Set the proxy for the Docker daemon (see Docker's [daemon proxy guide](https://docs.docker.com/engine/daemon/proxy/)), export `HTTPS_PROXY` in your shell for the jar download, and build with `docker compose build --build-arg HTTPS_PROXY=$HTTPS_PROXY spark`.
 
@@ -157,11 +184,16 @@ No output means they're free. Only these three need checking, because they are t
 
 **3. Get the project and add your settings**
 
-Download this repository (**Code > Download ZIP**, or `git clone`), unpack it on the Docker host and open the project folder:
+Download the project to the Docker host with `git clone` and open the project folder:
 
-    cd PowerScale_Iceberg_Demo-main      # or PowerScale_Iceberg_Demo if you used git clone
+    git clone https://github.com/RawanAlturkestani/PowerScale_Iceberg_Demo.git
+    cd PowerScale_Iceberg_Demo
 
-Open the `.env` file in the project folder with any text editor and add your settings, using the IP and key from the bucket steps. For example, with nano:
+Open the `.env` file in the project folder with any text editor and add your settings, using the IP and key from the bucket steps.
+
+Files whose names start with a dot, like `.env`, are hidden by default. If you open the folder in a file manager instead of the terminal, turn on hidden files to see it (for example `Ctrl+H` in most Linux file managers). In the terminal, `ls -a` lists it.
+
+For example, to edit it with nano:
 
     nano .env
 
@@ -230,6 +262,13 @@ You should see `Starting Hive Metastore Server` and no exceptions.
 By default the web UIs only listen on the Docker host itself (`BIND_ADDRESS=127.0.0.1` in `.env`), because Jupyter and Trino have no login. From your laptop, open an SSH tunnel to the Docker host:
 
     ssh -L 8888:localhost:8888 -L 8080:localhost:8080 -L 4040:localhost:4040 <user>@<Docker host IP>
+
+Replace the placeholders, including the `<` and `>`:
+
+* `<user>`: the user you log in to the Docker host with, for example `root`
+* `<Docker host IP>`: the Docker host's IP address. To find it, run `hostname -I` on the Docker host.
+
+Run this command on your laptop, not on the Docker host, and keep that terminal open while you use the notebook.
 
 Then open `http://localhost:8888`, go to `notebooks/General_Walkthrough.ipynb` and run the cells in order.
 
