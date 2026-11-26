@@ -101,10 +101,10 @@ Use a dedicated user rather than root:
 
 **4. Create the bucket and its folder**
 
-mkdir -p /ifs/data/lakehouse/warehouse
-chmod 755 /ifs/data/lakehouse
-chown lakehouse /ifs/data/lakehouse/warehouse
-isi s3 buckets create warehouse /ifs/data/lakehouse/warehouse --owner lakehouse
+    mkdir -p /ifs/data/lakehouse/warehouse
+    chmod 755 /ifs/data/lakehouse
+    chown lakehouse /ifs/data/lakehouse/warehouse
+    isi s3 buckets create warehouse /ifs/data/lakehouse/warehouse --owner lakehouse
 
 * `warehouse` is the **bucket name**: what Spark and Trino use, for example `s3a://warehouse/...`
 * `/ifs/data/lakehouse/warehouse` is the **path**: the folder on PowerScale where the files are stored. It must exist, or every write fails with "The specified key does not exist" (404).
